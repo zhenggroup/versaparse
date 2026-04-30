@@ -1,6 +1,6 @@
 # versaparse
 
-A native, lightweight Python parser for AMETEK/Princeton Applied Research VersaStudio (`.par`) files. 
+This is a lightweight Python parser for AMETEK/Princeton Applied Research VersaStudio (`.par`) files, developed by Dr. Weiran Zheng (Associate Professor, Guangdong Technion - Israel Institute of Technology, Shantou, China)
 
 This package allows you to directly read proprietary `.par` files, automatically extracting the experiment metadata and converting the raw electrochemical data into easy-to-use Pandas DataFrames for quick analysis and plotting.
 
