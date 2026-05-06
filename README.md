@@ -53,6 +53,66 @@ df = experiment.get_segment(2)
 print(df[['Elapsed Time(s)', 'E(V)', 'I(A)']].head())
 ```
 
+4. Combining Multiple Segments
+If you want to combine data from multiple segments into a single DataFrame (useful for plotting or analysis across segments), use `get_combined_segments()`.
+
+```python
+# Combine specific segments (e.g., segments 1, 2, 3, and 5)
+combined_df = experiment.get_combined_segments([1, 2, 3, 5])
+
+# Combine a range of segments (e.g., segments 2 to 44 inclusive)
+range_df = experiment.get_combined_segments((2, 44))  # or range(2, 45)
+
+# Or combine all segments
+all_data_df = experiment.get_combined_segments()  # equivalent to experiment.data
+
+# Now you can plot or analyze the combined data
+import matplotlib.pyplot as plt
+plt.plot(combined_df['Elapsed Time(s)'], combined_df['I(A)'])
+plt.show()
+```
+
+5. Filtering Data
+You can filter the data based on various conditions using `filter_data()`.
+
+```python
+# Filter by exact value
+segment_2_data = experiment.filter_data({'Segment #': 2})
+
+# Filter by range (e.g., voltage between -1V and 1V)
+voltage_range = experiment.filter_data({'E(V)': (-1.0, 1.0)})
+
+# Filter by custom condition (e.g., frequency > 0)
+freq_data = experiment.filter_data({'Frequency(Hz)': lambda x: x > 0})
+
+# Combine conditions
+filtered = experiment.filter_data({
+    'Segment #': 1,
+    'Elapsed Time(s)': (10, 100),
+    'I(A)': lambda x: abs(x) < 0.01
+})
+```
+
+6. Time Range Data
+For convenience, get data within a specific time range.
+
+```python
+# Get data between 10 and 100 seconds
+time_data = experiment.get_time_range_data(10, 100)
+```
+
+7. Summary Statistics
+Get statistical summaries of your data.
+
+```python
+# Summary for all data
+overall_stats = experiment.get_summary_stats(group_by_segment=False)
+
+# Summary grouped by segment
+segment_stats = experiment.get_summary_stats(group_by_segment=True)
+print(segment_stats)
+```
+
 ## Full Plotting Example
 Here is a complete, copy-pasteable script that loads a file and plots the Current vs. Time for a specific segment. This is perfect for running in a Jupyter Notebook.
 ```python
